@@ -111,7 +111,7 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             try:
                 response = analyze_review_sentiments(review_detail['review'])
-                print(response)
+                print("Response from Sentianlyzer: " + str(response))
                 if response is not None:
                     review_detail['sentiment'] = response.get('sentiment', 'neutral')
                 else:
