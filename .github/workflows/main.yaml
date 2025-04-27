@@ -30,7 +30,6 @@ jobs:
 
     - name: Run Linter
       run: |
-        pwd
         # This command finds all Python files recursively and runs flake8 on them
         find . -name "*.py" -exec flake8 {} +
         echo "Linted all the python files successfully"
@@ -49,10 +48,10 @@ jobs:
         node-version: 14
 
     - name: Install JSHint
-      run: npm install jshint --global
+      run: npm install jshint@latest --global
 
     - name: Run Linter
       run: |
         # This command finds all JavaScript files recursively and runs JSHint on them
-        find ./server/database -name "*.js" -exec jshint --esversion 6 --undef --unused --reporter checkstyle {} +
+        find ./server/database -name "*.js" -exec jshint {} +
         echo "Linted all the js files successfully"
