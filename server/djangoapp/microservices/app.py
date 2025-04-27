@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 @app.route('/', methods=['GET'])
 def home():
-    return ("Welcome to the Sentiment Analyzer. Use /analyze/text to get the sentiment.") # noqa: E501
+    return ("Welcome to the Sentiment Analyzer. Use /analyze/text to get the sentiment.")  # noqa: E501
 
 
 @app.route('/analyze/<input_txt>', methods=['GET'])
