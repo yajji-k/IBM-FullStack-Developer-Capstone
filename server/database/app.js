@@ -94,28 +94,31 @@ app.get('/fetchDealer/:id', async (req, res) => {
 
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
-  data = JSON.parse(req.body);
-  const documents = await Reviews.find().sort( { id: -1 } )
-  let new_id = documents[0]['id']+1
-
-  const review = new Reviews({
-		"id": new_id,
-		"name": data['name'],
-		"dealership": data['dealership'],
-		"review": data['review'],
-		"purchase": data['purchase'],
-		"purchase_date": data['purchase_date'],
-		"car_make": data['car_make'],
-		"car_model": data['car_model'],
-		"car_year": data['car_year'],
-	});
-
   try {
+    // Parse the incoming raw JSON data
+    const data = JSON.parse(req.body);
+
+    // Create a new review instance
+    const review = new Reviews({
+      name: data['name'],
+      dealership: data['dealership'],
+      review: data['review'],
+      purchase: data['purchase'],
+      purchase_date: data['purchase_date'],
+      car_make: data['car_make'],
+      car_model: data['car_model'],
+      car_year: data['car_year'],
+    });
+
+    // Save the review to the database
     const savedReview = await review.save();
-    res.json(savedReview);
+
+    // Return the saved review as a response
+    res.status(201).json(savedReview);
   } catch (error) {
-		console.log(error);
-    res.status(500).json({ error: 'Error inserting review' });
+    // Handle errors and send an appropriate response
+    console.error('Error inserting review:', error);
+    res.status(500).json({ message: 'Error saving review', error: error.message });
   }
 });
 
