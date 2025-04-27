@@ -45,7 +45,7 @@ def registration(request):
     try:
         # Check if user already exists
         User.objects.get(username=username)
-        return JsonResponse({"userName": username, "error": "Already Registered"})
+        return JsonResponse({"userName": username, "error": "Already Registered"}) # noqa: E501
     except User.DoesNotExist:
         # If not, create the user
         user = User.objects.create_user(
@@ -83,8 +83,7 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             try:
                 response = analyze_review_sentiments(review_detail['review'])
-                review_detail['sentiment'] = response.get('sentiment', 'neutral') \
-                    if response else 'neutral'
+                review_detail['sentiment'] = response.get('sentiment', 'neutral') if response else 'neutral' # noqa: E501
             except Exception as e:
                 logger.error(f"Exception during sentiment analysis: {e}")
                 review_detail['sentiment'] = 'neutral'
@@ -110,5 +109,5 @@ def add_review(request):
             return JsonResponse({"status": 200})
         except Exception as e:
             logger.error(f"Error in posting review: {e}")
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse({"status": 401, "message": "Error in posting review"}) # noqa: E501
     return JsonResponse({"status": 403, "message": "Unauthorized"})

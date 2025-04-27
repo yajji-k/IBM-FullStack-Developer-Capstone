@@ -16,11 +16,11 @@ def initiate():
             "description": "Great cars. German technology"
         },
         {
-            "name": "Kia", 
+            "name": "Kia",
             "description": "Great cars. Korean technology"
         },
         {
-            "name": "Toyota", 
+            "name": "Toyota",
             "description": "Great cars. Japanese technology"
         }
     ]
