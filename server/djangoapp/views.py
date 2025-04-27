@@ -48,8 +48,10 @@ def registration(request):
         return JsonResponse({"userName": username, "error": "Already Registered"})
     except User.DoesNotExist:
         # If not, create the user
-        user = User.objects.create_user(username=username, first_name=first_name,
-                                        last_name=last_name, password=password, email=email)
+        user = User.objects.create_user(
+            username=username, first_name=first_name,
+            last_name=last_name, password=password, email=email
+        )
         login(request, user)
         return JsonResponse({"userName": username, "status": "Authenticated"})
 
@@ -59,7 +61,10 @@ def get_cars(request):
     if CarMake.objects.count() == 0:
         initiate()
     car_models = CarModel.objects.select_related('car_make')
-    cars = [{"CarModel": car_model.name, "CarMake": car_model.car_make.name} for car_model in car_models]
+    cars = [
+        {"CarModel": car_model.name, "CarMake": car_model.car_make.name}
+        for car_model in car_models
+    ]
     return JsonResponse({"CarModels": cars})
 
 
@@ -78,7 +83,8 @@ def get_dealer_reviews(request, dealer_id):
         for review_detail in reviews:
             try:
                 response = analyze_review_sentiments(review_detail['review'])
-                review_detail['sentiment'] = response.get('sentiment', 'neutral') if response else 'neutral'
+                review_detail['sentiment'] = response.get('sentiment', 'neutral') \
+                    if response else 'neutral'
             except Exception as e:
                 logger.error(f"Exception during sentiment analysis: {e}")
                 review_detail['sentiment'] = 'neutral'
