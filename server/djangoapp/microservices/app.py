@@ -1,9 +1,9 @@
 from flask import Flask, jsonify
 from nltk.sentiment import SentimentIntensityAnalyzer
-import json
 
 app = Flask("Sentiment Analyzer")
 sia = SentimentIntensityAnalyzer()
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -32,7 +32,9 @@ def analyze_sentiment(input_txt):
 
     except Exception as e:
         print(f"Error analyzing sentiment: {e}")
-        return jsonify({"error": "An error occurred during sentiment analysis."}), 500
+        return jsonify({
+            "error": "An error occurred during sentiment analysis."
+        }), 500
 
 
 if __name__ == "__main__":
